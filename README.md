@@ -66,7 +66,7 @@ pnpm test
 
 - **No Pinia** – State is managed via a composable (`useWeather`) since the app scope doesn't warrant a full state management library
 - **Fetch API** – Native fetch used instead of axios to minimize dependencies
-- **Metric-first** – Data is always fetched in metric and converted locally on unit togglei, avoiding unnecessary API calls
+- **Metric-first** – Data is always fetched in metric and converted locally on unit toggle, avoiding unnecessary API calls
 - **pnpm** – Chosen for its performance and strict dependency isolation
 
 ## TODO
