@@ -1,5 +1,5 @@
 import { describe, it, expect, vi, beforeEach } from 'vitest'
-import { fetchGeoLocation, fetchCurrentWeather } from 'src/services/weatherApi'
+import { fetchGeoLocation, fetchCurrentWeather, fetchForecast } from 'src/services/weatherApi'
 
 // Mock the global fetch function
 const mockFetch = vi.fn()
@@ -43,3 +43,25 @@ describe('fetchCurrentWeather', () => {
     await expect(fetchCurrentWeather(59.3, 18.1, 'metric')).rejects.toThrow('Weather fetch failed: 404')
   })
 })
+
+describe('fetchForecast', () => {
+  it('returns forecast data', async () => {
+    mockFetch.mockResolvedValueOnce({
+      ok: true,
+      json: async () => ({
+        city: { name: 'Stockholm', country: 'SE' },
+        list: [{ dt: 1234567890, main: { temp: 12 }, weather: [], wind: { speed: 5, deg: 180 }, dt_txt: '2024-03-19 12:00:00' }]
+      }),
+    })
+
+    const result = await fetchForecast(59.3, 18.1, 'metric')
+    expect(result.city.name).toBe('Stockholm')
+    expect(result.list).toHaveLength(1)
+  })
+
+  it('throws an error on failed request', async () => {
+    mockFetch.mockResolvedValueOnce({ ok: false, status: 404 })
+    await expect(fetchForecast(59.3, 18.1, 'metric')).rejects.toThrow('Forecast fetch failed: 404')
+  })
+})
+

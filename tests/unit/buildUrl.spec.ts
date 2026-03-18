@@ -1,5 +1,5 @@
 import { describe, it, expect } from 'vitest'
-import { buildWeatherUrl, buildGeoUrl } from 'src/utils/buildUrl'
+import { buildWeatherUrl, buildGeoUrl, buildForecastUrl } from 'src/utils/buildUrl'
 
 describe('buildWeatherUrl', () => {
   it('includes lat, lon and units in the URL', () => {
@@ -26,3 +26,13 @@ describe('buildGeoUrl', () => {
     expect(url).toContain('limit=3')
   })
 })
+
+describe('buildForecastUrl', () => {
+  it('includes lat, lon and units in the URL', () => {
+    const url = buildForecastUrl(59.3, 18.1, 'metric')
+    expect(url).toContain('lat=59.3')
+    expect(url).toContain('lon=18.1')
+    expect(url).toContain('units=metric')
+  })
+})
+

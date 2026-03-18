@@ -1,6 +1,6 @@
 // API calls to OpenWeatherMap - handles fetch and error handling
-import { buildWeatherUrl, buildGeoUrl } from 'src/utils/buildUrl'
-import type { CurrentWeather } from 'src/types/weather'
+import { buildWeatherUrl, buildGeoUrl, buildForecastUrl } from 'src/utils/buildUrl'
+import type { CurrentWeather, ForecastResponse } from 'src/types/weather'
 import type { GeoLocation } from 'src/types/geo'
 import type { WeatherUnit } from 'src/types/units'
 
@@ -21,3 +21,15 @@ export const fetchCurrentWeather = async (
   if (!response.ok) throw new Error(`Weather fetch failed: ${response.status}`)
   return response.json()
 }
+
+// Fetches 5-day forecast in 3-hour intervals for a given coordinate
+export const fetchForecast = async (
+  lat: number,
+  lon: number,
+  units: WeatherUnit
+): Promise<ForecastResponse> => {
+  const response = await fetch(buildForecastUrl(lat, lon, units))
+  if (!response.ok) throw new Error(`Forecast fetch failed: ${response.status}`)
+  return response.json()
+}
+
