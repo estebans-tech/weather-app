@@ -4,18 +4,19 @@ A weather forecast application built with Vue 3, Quasar, and OpenWeatherMap API.
 
 ## What it does
 
-- Search for a location and display its current weather
+- Search for a city and display current weather
 - Toggle between metric (°C, m/s) and imperial (°F, mph) units
-- Refresh weather for the selected location
+- Refresh weather for the current location
 
 ## Tech Stack
 
-- Vue 3 with Composition API
-- Quasar Framework
+- Vue 3 with Composition API and `<script setup>`
+- Quasar Framework v2
 - TypeScript
 - Vite
+- pnpm
 - Vitest (unit tests)
-- Docker
+- Docker + nginx
 
 ## Prerequisites
 
@@ -44,19 +45,34 @@ Then open http://localhost:8080
 
 | Variable | Description |
 |---|---|
-| `VITE_OPENWEATHER_API_KEY` | Your OpenWeatherMap API key |
+| `VITE_OPENWEATHER_API_KEY` | Your OpenWeatherMap API key (required) |
+
+> The API key is intentionally not included in the repository. This is by design – secrets should never be committed to version control.
+
+## Running Tests
+```bash
+pnpm test
+```
 
 ## Architecture
 
 - `src/services/` – API calls to OpenWeatherMap
-- `src/composables/` – Reusable logic (search, state)
+- `src/composables/` – Reusable logic (search, state management)
 - `src/utils/` – URL building, unit conversion
-- `src/types/` – TypeScript interfaces
-- `src/constants/` – API endpoints, search config
+- `src/types/` – TypeScript interfaces per domain (geo, weather, units)
+- `src/constants/` – API endpoints, search config, default values
+
+## Architecture Decisions
+
+- **No Pinia** – State is managed via a composable (`useWeather`) since the app scope doesn't warrant a full state management library
+- **Fetch API** – Native fetch used instead of axios to minimize dependencies
+- **Metric-first** – Data is always fetched in metric and converted locally on unit togglei, avoiding unnecessary API calls
+- **pnpm** – Chosen for its performance and strict dependency isolation
 
 ## TODO
 
 - Dark mode
 - 5-day forecast
-- Improved weather icons
+- Improved weather icons (replace CDN images with a proper icon library)
+- Let user choose among geocoding results when multiple matches are found
 
