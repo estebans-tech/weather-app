@@ -5,9 +5,8 @@ ENV CI=true
 ARG VITE_OPENWEATHER_API_KEY
 ENV VITE_OPENWEATHER_API_KEY=$VITE_OPENWEATHER_API_KEY
 RUN npm install -g pnpm
-COPY package.json pnpm-lock.yaml ./
-RUN pnpm install --frozen-lockfile 
 COPY . .
+RUN pnpm install --frozen-lockfile
 RUN pnpm run build
 
 # Stage 2: Serve
