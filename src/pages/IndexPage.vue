@@ -24,6 +24,13 @@ const handleClear = () => {
   weather.value = undefined
   dailyForecasts.value = []
 }
+
+const handleRefresh = async () => {
+  await refresh()
+  if (location.value) {
+    await loadForecast(location.value.lat, location.value.lon, unit.value)
+  }
+}
 </script>
 
 <style scoped lang="scss">
@@ -53,7 +60,7 @@ const handleClear = () => {
         Search for a city to see the weather
       </div>
       <template v-else>
-        <WeatherCard :weather="weather" :unit="unit" @refresh="refresh" />
+        <WeatherCard :weather="weather" :unit="unit" @refresh="handleRefresh" />
         <ForecastList v-if="dailyForecasts.length" :forecasts="dailyForecasts" :unit="unit" />
       </template>
     </div>
