@@ -36,7 +36,7 @@ export const useWeather = () => {
       }
 
       // Use the first result
-      location.value = locations[0] ?? null
+      location.value = locations[0] ?? undefined
       if (!location.value) return
 
       weather.value = await fetchCurrentWeather(
