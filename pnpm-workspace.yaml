@@ -1,2 +1,4 @@
-# https://pnpm.io/settings
+onlyBuiltDependencies:
+  - esbuild
+
 shamefullyHoist: true
