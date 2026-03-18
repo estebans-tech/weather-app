@@ -1,0 +1,58 @@
+import { describe, it, expect, vi, beforeEach } from 'vitest'
+import { useWeather } from 'src/composables/useWeather'
+
+// Mock the weatherApi service
+vi.mock('src/services/weatherApi', () => ({
+  fetchGeoLocation: vi.fn(),
+  fetchCurrentWeather: vi.fn(),
+}))
+
+import { fetchGeoLocation, fetchCurrentWeather } from 'src/services/weatherApi'
+
+const mockGeoLocation = { name: 'Stockholm', lat: 59.3, lon: 18.1, country: 'SE' }
+const mockWeather = {
+  name: 'Stockholm',
+  weather: [{ id: 800, main: 'Clear', description: 'clear sky', icon: '01d' }],
+  main: { temp: 12, feels_like: 9, temp_min: 8, temp_max: 14, humidity: 72 },
+  wind: { speed: 5, deg: 180 },
+  dt: Date.now(),
+  sys: { country: 'SE', sunrise: 0, sunset: 0 },
+}
+
+beforeEach(() => {
+  vi.clearAllMocks()
+})
+
+describe('useWeather', () => {
+  it('starts with no weather data', () => {
+    const { weather, isLoading, error } = useWeather()
+    expect(weather.value).toBeNull()
+    expect(isLoading.value).toBe(false)
+    expect(error.value).toBeNull()
+  })
+
+  it('sets weather data after successful search', async () => {
+    vi.mocked(fetchGeoLocation).mockResolvedValueOnce([mockGeoLocation])
+    vi.mocked(fetchCurrentWeather).mockResolvedValueOnce(mockWeather)
+
+    const { weather, search } = useWeather()
+    await search('Stockholm')
+
+    expect(weather.value?.name).toBe('Stockholm')
+  })
+
+  it('sets error when no locations found', async () => {
+    vi.mocked(fetchGeoLocation).mockResolvedValueOnce([])
+
+    const { error, search } = useWeather()
+    await search('XYZ')
+
+    expect(error.value).toBe('No locations found')
+  })
+
+  it('does nothing when search query is empty', async () => {
+    const { weather, search } = useWeather()
+    await search('')
+    expect(weather.value).toBeNull()
+  })
+})
