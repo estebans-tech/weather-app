@@ -8,8 +8,11 @@ const unit = ref<WeatherUnit>('metric')
 <template>
   <q-btn-toggle
     v-model="unit"
-    flat
+    outlined
+    rounded
     toggle-color="primary"
+    color="white"
+    text-color="primary"
     :options="[
       { label: '°C', value: 'metric' },
       { label: '°F', value: 'imperial' },
