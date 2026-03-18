@@ -1,40 +1,62 @@
 # Weather App (weather-app)
 
-A Weather App built with Quasar and OpenWeatherMap
+A weather forecast application built with Vue 3, Quasar, and OpenWeatherMap API.
 
-## Install the dependencies
+## What it does
+
+- Search for a location and display its current weather
+- Toggle between metric (°C, m/s) and imperial (°F, mph) units
+- Refresh weather for the selected location
+
+## Tech Stack
+
+- Vue 3 with Composition API
+- Quasar Framework
+- TypeScript
+- Vite
+- Vitest (unit tests)
+- Docker
+
+## Prerequisites
+
+- Node.js >= 18
+- pnpm
+- An OpenWeatherMap API key ([get one free here](https://openweathermap.org/api))
+
+## Getting Started
 ```bash
-yarn
-# or
-npm install
+cp .env.example .env
+# Add your API key to .env
+
+pnpm install
+pnpm dev
 ```
 
-### Start the app in development mode (hot-code reloading, error reporting, etc.)
+## Running with Docker
 ```bash
-quasar dev
+docker build -t weather-app .
+docker run -p 8080:80 --env-file .env weather-app
 ```
 
+Then open http://localhost:8080
 
-### Lint the files
-```bash
-yarn lint
-# or
-npm run lint
-```
+## Environment Variables
 
+| Variable | Description |
+|---|---|
+| `VITE_OPENWEATHER_API_KEY` | Your OpenWeatherMap API key |
 
-### Format the files
-```bash
-yarn format
-# or
-npm run format
-```
+## Architecture
 
+- `src/services/` – API calls to OpenWeatherMap
+- `src/composables/` – Reusable logic (search, state)
+- `src/utils/` – URL building, unit conversion
+- `src/types/` – TypeScript interfaces
+- `src/constants/` – API endpoints, search config
 
-### Build the app for production
-```bash
-quasar build
-```
+## TODO
 
-### Customize the configuration
-See [Configuring quasar.config.js](https://v2.quasar.dev/quasar-cli-vite/quasar-config-js).
+- Dark mode
+- 5-day forecast
+- Improved weather icons
+
