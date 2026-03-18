@@ -7,6 +7,7 @@ A weather forecast application built with Vue 3, Quasar, and OpenWeatherMap API.
 - Search for a city and display current weather
 - Toggle between metric (°C, m/s) and imperial (°F, mph) units
 - Refresh weather for the current location
+- View 5-day weather forecast for the selected location
 
 ## Tech Stack
 
@@ -72,7 +73,6 @@ pnpm test
 ## TODO
 
 - Dark mode
-- 5-day forecast
 - Improved weather icons (replace CDN images with a proper icon library)
 - Let user choose among geocoding results when multiple matches are found
 
