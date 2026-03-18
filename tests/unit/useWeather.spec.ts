@@ -1,5 +1,7 @@
 import { describe, it, expect, vi, beforeEach } from 'vitest'
 import { useWeather } from 'src/composables/useWeather'
+// Mocks
+import { mockWeather } from '../fixtures/weather'
 
 // Mock the weatherApi service
 vi.mock('src/services/weatherApi', () => ({
@@ -10,14 +12,6 @@ vi.mock('src/services/weatherApi', () => ({
 import { fetchGeoLocation, fetchCurrentWeather } from 'src/services/weatherApi'
 
 const mockGeoLocation = { name: 'Stockholm', lat: 59.3, lon: 18.1, country: 'SE' }
-const mockWeather = {
-  name: 'Stockholm',
-  weather: [{ id: 800, main: 'Clear', description: 'clear sky', icon: '01d' }],
-  main: { temp: 12, feels_like: 9, temp_min: 8, temp_max: 14, humidity: 72 },
-  wind: { speed: 5, deg: 180 },
-  dt: Date.now(),
-  sys: { country: 'SE', sunrise: 0, sunset: 0 },
-}
 
 beforeEach(() => {
   vi.clearAllMocks()

@@ -1,19 +1,18 @@
 <script setup lang="ts">
 // Components
 import WeatherDetails from 'components/WeatherDetails.vue'
-
-// Utils
-import { roundTemp } from 'src/utils/convertUnits'
-
+// Composables
+import { useUnits } from 'src/composables/useUnits'
 // Types
 import type { CurrentWeather } from 'src/types/weather'
 import type { WeatherUnit } from 'src/types/units'
 
-defineProps<{
+const props = defineProps<{
   weather: CurrentWeather
   unit: WeatherUnit
 }>()
 
+const { displayTemp, tempUnit } = useUnits(() => props.unit)
 </script>
 
 <template>
@@ -31,12 +30,8 @@ defineProps<{
         :alt="weather.weather[0]?.description"
       />
       <div>
-        <div class="text-h4">
-          {{ roundTemp(weather.main.temp) }}{{ unit === 'metric' ? '°C' : '°F' }}
-        </div>
-        <div class="text-caption">
-          Feels like {{ roundTemp(weather.main.feels_like) }}{{ unit === 'metric' ? '°C' : '°F' }}
-        </div>
+        <div class="text-h4">{{ displayTemp(props.weather.main.temp) }}{{ tempUnit }}</div>
+        <div class="text-caption">Feels like {{ displayTemp(props.weather.main.feels_like) }}{{ tempUnit }}</div>
       </div>
     </q-card-section>
 
