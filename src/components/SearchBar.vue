@@ -4,6 +4,7 @@ import { SEARCH_MIN_CHARS, SEARCH_DEBOUNCE_MS } from 'src/constants/search'
 
 const emit = defineEmits<{
   search: [query: string]
+  clear: []
 }>()
 
 const query = ref('')
@@ -12,6 +13,8 @@ const query = ref('')
 watch(query, (val) => {
   if (val.length >= SEARCH_MIN_CHARS) {
     emit('search', val)
+  } else if (val.length === 0) {
+    emit('clear')
   }
 })
 </script>

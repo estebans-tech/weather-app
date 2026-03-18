@@ -19,6 +19,11 @@ const handleSearch = async (city: string) => {
     await loadForecast(location.value.lat, location.value.lon, unit.value)
   }
 }
+
+const handleClear = () => {
+  weather.value = undefined
+  dailyForecasts.value = []
+}
 </script>
 
 <style scoped lang="scss">
@@ -32,7 +37,7 @@ const handleSearch = async (city: string) => {
 <q-page class="column items-center q-pa-md">
     <div class="weather-app">
       <div class="row items-center q-mb-md">
-        <SearchBar class="col" @search="handleSearch" />
+        <SearchBar class="col" @search="handleSearch" @clear="handleClear" />
         <UnitToggle v-model="unit" class="q-ml-sm" />
       </div>
 
