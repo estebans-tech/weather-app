@@ -36,8 +36,8 @@ pnpm dev
 
 ## Running with Docker
 ```bash
-docker build -t weather-app .
-docker run -p 8080:80 --env-file .env weather-app
+docker build --build-arg VITE_OPENWEATHER_API_KEY=your_api_key -t weather-app .
+docker run -p 8080:80 weather-app
 ```
 
 Then open http://localhost:8080

@@ -2,6 +2,8 @@
 FROM node:20-alpine AS builder
 WORKDIR /app
 ENV CI=true
+ARG VITE_OPENWEATHER_API_KEY
+ENV VITE_OPENWEATHER_API_KEY=$VITE_OPENWEATHER_API_KEY
 RUN npm install -g pnpm
 COPY package.json pnpm-lock.yaml ./
 RUN pnpm install --frozen-lockfile --ignore-scripts
