@@ -26,7 +26,7 @@ beforeEach(() => {
 describe('useWeather', () => {
   it('starts with no weather data', () => {
     const { weather, isLoading, error } = useWeather()
-    expect(weather.value).toBeNull()
+    expect(weather.value).toBeUndefined()
     expect(isLoading.value).toBe(false)
     expect(error.value).toBeNull()
   })
@@ -53,6 +53,6 @@ describe('useWeather', () => {
   it('does nothing when search query is empty', async () => {
     const { weather, search } = useWeather()
     await search('')
-    expect(weather.value).toBeNull()
+    expect(weather.value).toBeUndefined()
   })
 })

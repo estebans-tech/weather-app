@@ -1,14 +1,16 @@
 // Composable that manages weather state and search logic
 import { ref } from 'vue'
 import { fetchGeoLocation, fetchCurrentWeather } from 'src/services/weatherApi'
+
 import type { CurrentWeather } from 'src/types/weather'
 import type { GeoLocation } from 'src/types/geo'
 import type { WeatherUnit } from 'src/types/units'
+
 import { DEFAULT_WEATHER_UNIT } from 'src/constants/units'
 
 export const useWeather = () => {
-  const weather = ref<CurrentWeather | null>(null)
-  const location = ref<GeoLocation | null>(null)
+  const weather = ref<CurrentWeather>()
+  const location = ref<GeoLocation>()
   const unit = ref<WeatherUnit>(DEFAULT_WEATHER_UNIT)
   const isLoading = ref(false)
   const error = ref<string | null>(null)
