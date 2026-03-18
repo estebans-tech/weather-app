@@ -75,4 +75,5 @@ pnpm test
 - Dark mode
 - Improved weather icons (replace CDN images with a proper icon library)
 - Let user choose among geocoding results when multiple matches are found
+- Improve forecast display – show weekday names instead of dates, add section label "5-day forecast"
 
