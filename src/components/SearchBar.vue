@@ -1,16 +1,26 @@
 <script setup lang="ts">
-import { ref } from 'vue'
+import { ref, watch } from 'vue'
+import { SEARCH_MIN_CHARS, SEARCH_DEBOUNCE_MS } from 'src/constants/search'
 
-// Local search query - will be emitted to parent when ready
+const emit = defineEmits<{
+  search: [query: string]
+}>()
+
 const query = ref('')
-</script>
 
+// Debounce is handled by q-input's built-in debounce prop
+watch(query, (val) => {
+  if (val.length >= SEARCH_MIN_CHARS) {
+    emit('search', val)
+  }
+})
+</script>
 <template>
   <q-input
     v-model="query"
     outlined
     placeholder="Search for a city..."
-    debounce="300"
+    :debounce="SEARCH_DEBOUNCE_MS"
   >
     <template #prepend>
       <q-icon name="search" />

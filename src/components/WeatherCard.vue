@@ -2,6 +2,9 @@
 // Components
 import WeatherDetails from 'components/WeatherDetails.vue'
 
+// Utils
+import { roundTemp } from 'src/utils/convertUnits'
+
 // Types
 import type { CurrentWeather } from 'src/types/weather'
 import type { WeatherUnit } from 'src/types/units'
@@ -29,10 +32,10 @@ defineProps<{
       />
       <div>
         <div class="text-h4">
-          {{ weather.main.temp }}{{ unit === 'metric' ? '°C' : '°F' }}
+          {{ roundTemp(weather.main.temp) }}{{ unit === 'metric' ? '°C' : '°F' }}
         </div>
         <div class="text-caption">
-          Feels like {{ weather.main.feels_like }}{{ unit === 'metric' ? '°C' : '°F' }}
+          Feels like {{ roundTemp(weather.main.feels_like) }}{{ unit === 'metric' ? '°C' : '°F' }}
         </div>
       </div>
     </q-card-section>

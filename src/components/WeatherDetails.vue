@@ -1,4 +1,8 @@
 <script setup lang="ts">
+// Utils
+import { roundWind } from 'src/utils/convertUnits'
+
+// Types
 import type { WeatherUnit } from 'src/types/units'
 
 const props = defineProps<{
@@ -11,6 +15,6 @@ const props = defineProps<{
 <template>
   <div class="row q-gutter-md">
     <div>💧 {{ props.humidity }}%</div>
-    <div>💨 {{ props.windSpeed }} {{ props.unit === 'metric' ? 'm/s' : 'mph' }}</div>
+    <div>💨 {{ roundWind(windSpeed) }} {{ unit === 'metric' ? 'm/s' : 'mph' }}</div>
   </div>
 </template>

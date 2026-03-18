@@ -10,3 +10,12 @@ export const celsiusToFahrenheit = (celsius: number): number =>
 export const msToMph = (ms: number): number =>
   Math.round(ms * 2.237)
 
+// Rounds temperature to nearest integer
+// Example: roundTemp(14.92) => 15
+export const roundTemp = (temp: number): number => Math.round(temp)
+
+// Rounds wind speed to one decimal for display
+// Example: roundWind(4.12) => 4.1
+export const roundWind = (speed: number): number =>
+  Math.round(speed * 10) / 10
+
