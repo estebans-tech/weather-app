@@ -42,6 +42,5 @@ const { displayTemp, tempUnit } = useUnits(() => props.unit)
         :unit="unit"
       />
     </q-card-section>
-
   </q-card>
 </template>

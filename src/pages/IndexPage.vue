@@ -32,7 +32,32 @@ const handleRefresh = async () => {
   }
 }
 </script>
+<template>
+  <q-page class="column items-center q-pa-md">
+      <div class="weather-app">
+        <div class="row items-center q-mb-md">
+          <SearchBar class="col" @search="handleSearch" @clear="handleClear" />
+          <UnitToggle v-model="unit" class="q-ml-sm" />
+        </div>
 
+        <div v-if="isLoading" class="text-center q-mt-xl">
+          <q-spinner size="40px" />
+        </div>
+
+        <div v-else-if="error" class="text-negative text-center q-mt-md">
+          {{ error }}
+        </div>
+
+        <div v-else-if="!weather" class="text-center text-grey q-mt-xl">
+          Search for a city to see the weather
+        </div>
+        <template v-else>
+          <WeatherCard :weather="weather" :unit="unit" @refresh="handleRefresh" />
+          <ForecastList v-if="dailyForecasts.length" :forecasts="dailyForecasts" :unit="unit" />
+        </template>
+      </div>
+  </q-page>
+</template>
 <style scoped lang="scss">
 .weather-app {
   width: 100%;
@@ -40,30 +65,4 @@ const handleRefresh = async () => {
 }
 </style>
 
-<template>
-<q-page class="column items-center q-pa-md">
-    <div class="weather-app">
-      <div class="row items-center q-mb-md">
-        <SearchBar class="col" @search="handleSearch" @clear="handleClear" />
-        <UnitToggle v-model="unit" class="q-ml-sm" />
-      </div>
-
-      <div v-if="isLoading" class="text-center q-mt-xl">
-        <q-spinner size="40px" />
-      </div>
-
-      <div v-else-if="error" class="text-negative text-center q-mt-md">
-        {{ error }}
-      </div>
-
-      <div v-else-if="!weather" class="text-center text-grey q-mt-xl">
-        Search for a city to see the weather
-      </div>
-      <template v-else>
-        <WeatherCard :weather="weather" :unit="unit" @refresh="handleRefresh" />
-        <ForecastList v-if="dailyForecasts.length" :forecasts="dailyForecasts" :unit="unit" />
-      </template>
-    </div>
-  </q-page>
-</template>
 
