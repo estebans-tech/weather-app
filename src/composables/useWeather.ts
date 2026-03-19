@@ -1,4 +1,3 @@
-// Composable that manages weather state and search logic
 import { ref } from 'vue'
 import { fetchGeoLocation, fetchCurrentWeather } from 'src/services/weatherApi'
 
@@ -56,9 +55,21 @@ export const useWeather = () => {
   // Refreshes weather for the current location
   const refresh = async () => {
     if (!location.value) return
-    await fetchCurrentWeather(location.value.lat, location.value.lon, unit.value)
-      .then((data) => (weather.value = data))
-      .catch((err) => (error.value = err.message))
+
+    isLoading.value = true
+    error.value = null
+
+    try {
+      weather.value = await fetchCurrentWeather(
+        location.value.lat,
+        location.value.lon,
+        unit.value
+      )
+    } catch (err) {
+      if (err instanceof Error) error.value = err.message
+    } finally {
+      isLoading.value = false
+    }
   }
 
   return { weather, location, unit, isLoading, error, search, refresh }
