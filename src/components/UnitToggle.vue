@@ -1,8 +1,7 @@
 <script setup lang="ts">
-import { ref } from 'vue'
 import type { WeatherUnit } from 'src/types/units'
 
-const unit = ref<WeatherUnit>('metric')
+const unit = defineModel<WeatherUnit>({ required: true })
 </script>
 
 <template>
