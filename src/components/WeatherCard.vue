@@ -12,6 +12,8 @@ const props = defineProps<{
   unit: WeatherUnit
 }>()
 
+const emit = defineEmits<{ refresh: [] }>()
+
 const { displayTemp, tempUnit } = useUnits(() => props.unit)
 </script>
 
@@ -20,7 +22,7 @@ const { displayTemp, tempUnit } = useUnits(() => props.unit)
     <q-card-section>
       <div class="row items-center justify-between">
         <div class="text-h6">{{ weather.name }}, {{ weather.sys.country }}</div>
-        <q-btn flat round icon="refresh" />
+        <q-btn flat round icon="refresh" @click="emit('refresh')" />
       </div>
     </q-card-section>
 
